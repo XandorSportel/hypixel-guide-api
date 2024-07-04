@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const testDataRouter = require("./routes/guidedata");
+const guideDataRouter = require("./routes/guidedata");
 app.use(express.json());
 app.use(
     express.urlencoded({
