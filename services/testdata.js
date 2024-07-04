@@ -20,25 +20,23 @@ async function getFormattedGuideData() {
     const rawData = await db.query(guideDataQuery);
     const guidesData = helper.emptyOrRows(rawData);
 
-    const formattedData = {
-        guides: {
-            starter: { categories: {} },
-            amateur: { categories: {} },
-            intermediate: { categories: {} }
-        }
-    };
+    const formattedData = { guides: {} };
 
     guidesData.forEach(row => {
-        const { guide_skill_level, category_name, item_name, quantity } = row;
+        const { guide_level, category_name, item_name, quantity } = row;
 
-        formattedData.guides[guide_skill_level].categories[category_name] = {
-            [item_name]: quantity
-        };
+        if (!formattedData.guides[guide_level]) {
+            formattedData.guides[guide_level] = { categories: {} };
+        }
+
+        if (!formattedData.guides[guide_level].categories[category_name]) {
+            formattedData.guides[guide_level].categories[category_name] = {};
+        }
+
+        formattedData.guides[guide_level].categories[category_name][item_name] = quantity;
     });
 
-    return {
-        data: formattedData
-    };
+    return formattedData;
 }
 
 module.exports = {
