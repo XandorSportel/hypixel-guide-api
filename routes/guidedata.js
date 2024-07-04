@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const testdata = require('../services/testdata');
+const guideData = require('../services/guidedata');
 
 router.get('/', async function(req, res, next) {
     try {
-        res.json(await testdata.getFormattedGuideData(req.query.page));
+        res.json(await guideData.getFormattedGuideData(req.query.page));
     } catch (err) {
-        console.error(`Error while getting testdata`, err.message);
+        console.error(`Error while getting guidedata`, err.message);
         next(err);
     }
 });

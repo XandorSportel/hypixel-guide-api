@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const testdataRouter = require("./routes/testdata");
+const testDataRouter = require("./routes/guidedata");
 app.use(express.json());
 app.use(
     express.urlencoded({
@@ -11,7 +11,7 @@ app.use(
 app.get("/", (req, res) => {
     res.json({ message: "ok" });
 });
-app.use("/testdata", testdataRouter);
+app.use("/guide", guideDataRouter);
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
