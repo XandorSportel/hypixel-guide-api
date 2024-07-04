@@ -1,0 +1,28 @@
+{
+    "guides": {
+        "amateur": {
+            "categories": {
+                "collections": {
+                    "CACTUS": 2,
+                    "PUMPKIN": 4
+                },
+                "minions": {
+                    "DIAMOND": 4,
+                    "EMERALD": 3
+                }
+            }
+        },
+        "intermediate": {
+            "categories": {
+                "collections": {
+                    "CACTUS": 5,
+                    "PUMPKIN": 7
+                },
+                "minions": {
+                    "DIAMOND": 8,
+                    "EMERALD": 7
+                }
+            }
+        }
+    }
+}
