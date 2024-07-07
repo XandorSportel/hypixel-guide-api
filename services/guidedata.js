@@ -2,38 +2,38 @@ const db = require('./db');
 const helper = require('../helper');
 
 async function getFormattedGuideData() {
-    const guideDataQuery = `
+    const stageDataQuery = `
         SELECT 
-            g.level AS guide_level,
-            c.category_name AS category_name,
-            cd.item_name AS item_name,
-            cd.quantity AS quantity
+            s.name AS stage,
+            c.name AS category_name,
+            cd.name AS item_name,
+            cd.tier AS tier
         FROM
-            guides g
+            stages s
         JOIN
-            categories c ON g.id = c.guide_id
+            categories c ON s.id = c.stage_id
         JOIN
             category_data cd ON c.id = cd.category_id
         ORDER BY
-            g.order_level
+            s.order_level
     `;
-    const rawData = await db.query(guideDataQuery);
-    const guidesData = helper.emptyOrRows(rawData);
+    const rawData = await db.query(stageDataQuery);
+    const stagesData = helper.emptyOrRows(rawData);
 
-    const formattedData = { guides: {} };
+    const formattedData = { stages: {} };
 
-    guidesData.forEach(row => {
-        const { guide_level, category_name, item_name, quantity } = row;
+    stagesData.forEach(row => {
+        const { stage, category_name, item_name, tier } = row;
 
-        if (!formattedData.guides[guide_level]) {
-            formattedData.guides[guide_level] = { categories: {} };
+        if (!formattedData.stages[stage]) {
+            formattedData.stages[stage] = { categories: {} };
         }
 
-        if (!formattedData.guides[guide_level].categories[category_name]) {
-            formattedData.guides[guide_level].categories[category_name] = {};
+        if (!formattedData.stages[stage].categories[category_name]) {
+            formattedData.stages[stage].categories[category_name] = {};
         }
 
-        formattedData.guides[guide_level].categories[category_name][item_name] = quantity;
+        formattedData.stages[stage].categories[category_name][item_name] = tier;
     });
 
     return formattedData;
